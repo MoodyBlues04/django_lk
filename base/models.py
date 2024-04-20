@@ -26,6 +26,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     profession = models.CharField(max_length=255, choices=Profession.choices, default=Profession.AVITOLOG)
     tg = models.CharField(max_length=255, null=True, default=None)
     image = models.CharField(max_length=255, null=True, default=None)
+    email_verify_token = models.CharField(max_length=255, null=True, default=None)
+    email_verified_at = models.DateTimeField(null=True, default=None)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'password', 'role']

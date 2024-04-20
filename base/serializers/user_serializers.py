@@ -27,7 +27,7 @@ class RegisterUserSerializer(AuthSerializer):
             raise serializers.ValidationError("Password and repeated password are not equals")
         return super().validate(attrs)
 
-    def create(self, validated_data: dict):
+    def create(self, validated_data: dict) -> User:
         return User.objects.create_user(
             email=validated_data['email'],
             username=validated_data['username'],
