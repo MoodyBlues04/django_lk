@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from base.models import User
-from .auth_serializers import CredentialsAuthSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -9,24 +8,37 @@ class UserSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class RegisterUserSerializer(CredentialsAuthSerializer):
-    username = serializers.CharField()
+class AuthSerializer(serializers.Serializer):
+    email = serializers.CharField()
     password = serializers.CharField()
 
-    def validate(self, attrs):
+    def get_authorized_user(self) -> User:
+        return User.get_by_credentials(email=self.data['email'], password=self.data['password'])
+
+
+class RegisterUserSerializer(AuthSerializer):
+    email = serializers.CharField()
+    username = serializers.CharField()
+    password = serializers.CharField()
+    password_repeat = serializers.CharField()
+
+    def validate(self, attrs: dict):
+        if attrs.get('password') != attrs.get('password_repeat'):
+            raise serializers.ValidationError("Password and repeated password are not equals")
         return super().validate(attrs)
 
-    def create(self, validated_data):
-        return User.create(
+    def create(self, validated_data: dict):
+        return User.objects.create_user(
+            email=validated_data['email'],
             username=validated_data['username'],
             password=validated_data['password'],
             role=User.Role.ROLE_CUSTOMER
         )
 
-    def validate_username(self, username: str) -> str:
-        if not User.exists_with_username(username):
+    def validate_email(self, email: str) -> str:
+        if User.exists_with_email(email):
             raise serializers.ValidationError('Username should be unique')
-        return username
+        return email
 
     def validate_password(self, password: str) -> str:
         if not User.is_valid_password(password):
@@ -34,31 +46,9 @@ class RegisterUserSerializer(CredentialsAuthSerializer):
         return password
 
 
-class LoginUserSerializer(CredentialsAuthSerializer):
-    pass
-
-
-class UpdateUserCredentialsSerializer(CredentialsAuthSerializer):
-    new_username = serializers.CharField()
-    new_password = serializers.CharField()
-
-    def validate(self, attrs):
+class LoginUserSerializer(AuthSerializer):
+    def validate(self, attrs: dict):
+        user = User.get_by_credentials(attrs['email'], attrs['password'])
+        if user is None:
+            raise serializers.ValidationError(f"Invalid credentials: {attrs['email']} {attrs['password']} {user}")
         return super().validate(attrs)
-
-    def validate_new_username(self, new_username: str) -> str:
-        user = User.get_by_username(new_username)
-        if user is not None:
-            raise serializers.ValidationError('Username should be unique')
-        return new_username
-
-    def validate_new_password(self, new_password: str) -> str:
-        if not User.is_valid_password(new_password):
-            raise serializers.ValidationError(f'Password must be at least {User.MIN_PASSWORD_LEN} characters')
-        return new_password
-
-    def update_credentials(self) -> None:
-        user = self.get_authorized_user()
-        user.update_credentials(
-            self.data['new_username'],
-            self.data['new_password']
-        )

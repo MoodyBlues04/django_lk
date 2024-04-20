@@ -1,0 +1,34 @@
+{% extends "auth/auth-layout.html" %}
+{% block title %} Register {% endblock %}
+{% block content %}
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">Register</div>
+            <div class="card-body">
+                <form method="POST" action="{% url 'register' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="email" name="email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" name="username">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password_repeat" class="form-label">Password Repeat</label>
+                        <input type="password" class="form-control" id="password_repeat" name="password_repeat">
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-primary" style="margin-right: 30px">Submit</button>
+                        <a href="{% url 'login' %}">Sign in</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
