@@ -54,3 +54,60 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def is_admin(self) -> bool:
         return self.role == self.Role.ROLE_ADMIN
+
+
+class Project(models.Model):
+    class Status(models.TextChoices):
+        ACTIVE = 'active'
+        INACTIVE = 'inactive'
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255, null=False, blank=False)
+    status = models.CharField(max_length=255, null=False, choices=Status.choices)
+    sheet_id = models.CharField(max_length=255, null=False)
+    xml_id = models.CharField(max_length=255, null=False)
+    time_web_token = models.CharField(max_length=255, null=False)
+    avito_client_id = models.CharField(max_length=255, null=False)
+    avito_client_secret = models.CharField(max_length=255, null=False)
+    image = models.CharField(max_length=255, null=True, default=None)
+    bucket = models.CharField(max_length=255, null=True, default=None)
+
+
+class Tariff(models.Model):
+    name = models.CharField(max_length=255, null=False, unique=True)
+    price = models.PositiveIntegerField(default=0, null=False)
+    options = models.JSONField()
+
+
+class Payment(models.Model):
+    class Status(models.TextChoices):
+        CREATED = 'created'
+        IN_PROGRESS = 'in_progress'
+        PAID = 'paid'
+        FAILED = 'failed'
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    tariff = models.ForeignKey(Tariff, on_delete=models.SET_NULL, null=True)
+    status = models.CharField(max_length=255, choices=Status.choices, null=False)
+    sum = models.PositiveIntegerField(null=False, default=0)
+    description = models.CharField(max_length=255, null=False, blank=True)
+
+
+class Subscription(models.Model):
+    class Status(models.TextChoices):
+        ACTIVE = 'active'
+        INACTIVE = 'inactive'
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    tariff = models.ForeignKey(Tariff, on_delete=models.SET_NULL, null=True)
+    period_start = models.DateField()
+    period_end = models.DateField()
+    status = models.CharField(max_length=255, null=False, choices=Status.choices)
+    remaining_options = models.JSONField()
+
+
+class FAQ(models.Model):
+    title = models.CharField(max_length=255, null=False, unique=True)
+    content = models.CharField(max_length=1024, null=False, blank=True)
+    links = models.JSONField()
+    is_active = models.BooleanField(default=False, null=False)
