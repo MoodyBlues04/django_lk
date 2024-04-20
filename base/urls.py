@@ -1,11 +1,19 @@
 from django.urls import path
-from .views import user_views
+from .views import auth_views, user_views, project_views, admin_views
 
 urlpatterns = [
-    path('', user_views.home, name='home'),
-    path('register', user_views.register, name='register'),
-    path('login', user_views.login, name='login'),
-    path('logout', user_views.login, name='logout'),
-    path('email_verify', user_views.email_verify, name='email_verify'),
-    path('test', user_views.test, name='test'),
+    # user
+    path('', user_views.home, name='home'),  # todo landing for unauthorized
+
+    # admin
+    path('admin/', admin_views.home, name='admin.home'),
+
+    # project
+    path('project/create', project_views.create, name='project.create'),
+
+    # auth
+    path('register', auth_views.register, name='register'),
+    path('login', auth_views.login, name='login'),
+    path('logout', auth_views.logout, name='logout'),
+    path('email_verify', auth_views.email_verify, name='email_verify'),
 ]

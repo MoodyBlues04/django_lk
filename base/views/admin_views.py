@@ -5,9 +5,7 @@ from rest_framework.decorators import api_view
 
 @api_view(['GET', 'POST'])
 def home(request: Request):
-    if not request.user.is_authenticated:
-        return redirect('login')
-    if request.user.is_admin():
-        return redirect('admin.home')
+    if not request.user.is_authenticated or not request.user.is_admin():
+        return redirect('login') # TODO middleware
 
-    return render(request, 'user/home.html')
+    return render(request, 'user/admin/home.html')
