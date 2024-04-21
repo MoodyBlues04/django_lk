@@ -1,17 +1,21 @@
 from django.urls import path
-from .views import auth_views, user_views, project_views, admin_views
+from .views import auth_views, user_views, project_views
+from .views.admin import admin_views, faq_views, tariff_views
 
 urlpatterns = [
     # admin
-    path('admin/faq/<int:faq_id>/edit', admin_views.edit_faq, name='admin.edit_faq'),
     path('admin/', admin_views.home, name='admin.home'),
     path('admin/profile', admin_views.profile, name='admin.profile'),  # TODO
     path('admin/projects', admin_views.projects, name='admin.projects'),  # TODO
-    path('admin/faq/<int:faq_id>/delete', admin_views.delete_faq, name='admin.delete_faq'),
-    path('admin/faq/create', admin_views.create_faq, name='admin.create_faq'),
-    path('admin/faq', admin_views.faq, name='admin.faq'),
+    path('admin/faq/<int:faq_id>/edit', faq_views.edit_faq, name='admin.edit_faq'),
+    path('admin/faq/<int:faq_id>/delete', faq_views.delete_faq, name='admin.delete_faq'),
+    path('admin/faq/create', faq_views.create_faq, name='admin.create_faq'),
+    path('admin/faq', faq_views.faq, name='admin.faq'),
     path('admin/users', admin_views.users, name='admin.users'),
-    path('admin/tariffs', admin_views.tariffs, name='admin.tariffs'),  # TODO
+    path('admin/tariffs/<int:tariff_id>/edit', tariff_views.edit_tariff, name='admin.edit_tariff'),
+    path('admin/tariffs/<int:tariff_id>/delete', tariff_views.delete_tariff, name='admin.delete_tariff'),
+    path('admin/tariffs/create', tariff_views.create_tariff, name='admin.create_tariff'),
+    path('admin/tariffs', tariff_views.tariffs, name='admin.tariffs'),
 
     # user
     path('', user_views.home, name='home'),  # todo landing for unauthorized

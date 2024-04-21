@@ -85,7 +85,8 @@ class Project(models.Model):
 class Tariff(models.Model):
     name = models.CharField(max_length=255, null=False, unique=True)
     price = models.PositiveIntegerField(default=0, null=False)
-    options = models.JSONField()
+    duration = models.PositiveIntegerField(default=0, null=False)
+    adverts_count = models.PositiveIntegerField(default=0, null=False)
 
 
 class Payment(models.Model):
@@ -112,17 +113,18 @@ class Subscription(models.Model):
     period_start = models.DateField()
     period_end = models.DateField()
     status = models.CharField(max_length=255, null=False, choices=Status.choices)
-    remaining_options = models.JSONField()
 
 
 class FAQ(models.Model):
     title = models.CharField(max_length=255, null=False, unique=True)
     content = models.CharField(max_length=1024, null=False, blank=True)
-    links = models.JSONField()
+    links = models.JSONField(blank=True, null=True)
     is_active = models.BooleanField(default=False, null=False)
 
     @property
     def links_dict(self) -> dict:
+        if self.links is None or len(self.links) == 0:
+            return dict()
         return json.loads(self.links)
 
     @property

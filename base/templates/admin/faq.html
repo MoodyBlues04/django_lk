@@ -25,7 +25,7 @@
                         <td>{{ faq.is_active }}</td>
                         <td>
                             <a class="btn btn-primary" href="{% url 'admin.edit_faq' faq_id=faq.id %}">Edit</a>
-                            <a class="btn btn-danger" href="{% url 'admin.delete_faq' faq_id=1 %}">Delete</a>
+                            <a class="btn btn-danger" href="{% url 'admin.delete_faq' faq_id=faq.id %}">Delete</a>
                         </td>
                     </tr>
                 {% endfor %}

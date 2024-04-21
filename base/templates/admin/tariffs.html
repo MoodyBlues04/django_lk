@@ -1,0 +1,35 @@
+{% extends "admin/layout.html" %}
+{% block content %}
+    <div class="container">
+        <h2>Tariffs</h2>
+        <a href="{% url 'admin.create_tariff' %}" class="btn btn-primary">Create</a>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">name</th>
+                    <th scope="col">price</th>
+                    <th scope="col">duration</th>
+                    <th scope="col">adverts_count</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tariff in tariffs %}
+                    <tr>
+                        <th scope="row">{{ tariff.id }}</th>
+                        <td>{{ tariff.name }}</td>
+                        <td>{{ tariff.price }}</td>
+                        <td>{{ tariff.duration }} days</td>
+                        <td>{{ tariff.adverts_count }}</td>
+                        <td>
+                            <a class="btn btn-primary" href="{% url 'admin.edit_tariff' tariff_id=tariff.id %}">Edit</a>
+                            <a class="btn btn-danger" href="{% url 'admin.delete_tariff' tariff_id=tariff.id %}">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+{% endblock %}

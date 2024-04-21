@@ -11,7 +11,7 @@ class FAQSerializer(serializers.ModelSerializer):
 class FAQCreateSerializer(serializers.Serializer):
     title = serializers.CharField()
     content = serializers.CharField()
-    links = serializers.CharField()
+    links = serializers.CharField(allow_blank=True)
     is_active = serializers.BooleanField()
 
     def validate_links(self, value: str) -> str:
