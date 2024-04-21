@@ -1,0 +1,39 @@
+{% extends "admin/layout.html" %}
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">Create FAQ</div>
+                    <div class="card-body">
+                        <form method="POST" action="{% url 'admin.create_faq' %}">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="title" class="form-label">Title</label>
+                                <input type="text" class="form-control" id="title" name="title">
+                            </div>
+                            <div class="mb-3">
+                                <label for="content" class="form-label">Content</label>
+                                <textarea class="form-control" name="content" id="content" rows="3"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="links" class="form-label">Links</label>
+                                <textarea class="form-control" name="links" id="links" rows="3"></textarea>
+                                <small id="links-help" class="form-text text-muted">Fill in {label} {url}
+                                    format.</small>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label" for="is_active">Active</label>
+                                <input type="checkbox" class="form-check-input" id="is_active" name="is_active">
+                            </div>
+                            <br>
+                            <div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

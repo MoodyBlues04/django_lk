@@ -1,4 +1,7 @@
 from __future__ import annotations
+
+import json
+
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.hashers import make_password, check_password
@@ -10,8 +13,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     MIN_PASSWORD_LEN = 6
 
     class Role(models.IntegerChoices):
-        ROLE_ADMIN = 0
-        ROLE_CUSTOMER = 1
+        ROLE_ADMIN = 0, 'admin'
+        ROLE_CUSTOMER = 1, 'customer'
 
     class Profession(models.TextChoices):
         AVITOLOG = "авитолог"
@@ -56,6 +59,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def is_admin(self) -> bool:
         return self.role == self.Role.ROLE_ADMIN
+
+    @property
+    def role_label(self) -> str:
+        return self.Role(self.role).label
 
 
 class Project(models.Model):
@@ -113,3 +120,15 @@ class FAQ(models.Model):
     content = models.CharField(max_length=1024, null=False, blank=True)
     links = models.JSONField()
     is_active = models.BooleanField(default=False, null=False)
+
+    @property
+    def links_dict(self) -> dict:
+        return json.loads(self.links)
+
+    @property
+    def links_text(self) -> str:
+        res = ''
+        for label, link in self.links_dict.items():
+            res += f'{label} {link}\n'
+        res = res.rstrip()
+        return res

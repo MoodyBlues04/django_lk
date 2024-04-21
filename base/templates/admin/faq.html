@@ -1,0 +1,36 @@
+{% extends "admin/layout.html" %}
+{% block content %}
+    <div class="container">
+        <h2>FAQ</h2>
+        <a href="{% url 'admin.create_faq' %}" class="btn btn-primary">Create</a>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">title</th>
+                    <th scope="col">content</th>
+                    <th scope="col">Links</th>
+                    <th scope="col">is_active</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for faq in faqs %}
+                    <tr>
+                        <th scope="row">{{ faq.id }}</th>
+                        <td>{{ faq.title }}</td>
+                        <td>{{ faq.content }}</td>
+{#                        TODO shorter #}
+                        <td>{{ faq.links }}</td>
+                        <td>{{ faq.is_active }}</td>
+                        <td>
+                            <a class="btn btn-primary" href="{% url 'admin.edit_faq' faq_id=faq.id %}">Edit</a>
+                            <a class="btn btn-danger" href="{% url 'admin.delete_faq' faq_id=1 %}">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+{% endblock %}

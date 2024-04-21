@@ -28,7 +28,7 @@ class RegisterUserSerializer(AuthSerializer):
         return super().validate(attrs)
 
     def create(self, validated_data: dict) -> User:
-        return User.objects.create_user(
+        return User.objects.create_customer(
             email=validated_data['email'],
             username=validated_data['username'],
             password=validated_data['password'],

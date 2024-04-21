@@ -1,0 +1,35 @@
+{% extends "admin/layout.html" %}
+{% block content %}
+    <div class="container">
+        <h2>Users</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Company</th>
+                    <th scope="col">Profession</th>
+                    <th scope="col">Tg</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <th scope="row">{{ user.id }}</th>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.role_label }}</td>
+                        <td>{{ user.phone }}</td>
+                        <td>{{ user.company }}</td>
+                        <td>{{ user.profession }}</td>
+                        <td>{{ user.tg }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+{% endblock %}

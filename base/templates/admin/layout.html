@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block title %} Admin Layout {% endblock %}
+{% block navbar %}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'home' %}">Главная</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'admin.profile' %}">Профиль</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'admin.projects' %}">Мои проекты</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'admin.faq' %}">FAQ</a>
+    </li>
+    <li>
+        <a class="nav-link" href="{% url 'admin.users' %}">Пользователи</a>
+    </li>
+    <li>
+        <a class="nav-link" href="{% url 'admin.tariffs' %}">Тарифы</a>
+    </li>
+{% endblock %}
+{% block content %}
+    <h1 class="h2">Добро пожаловать в Админ-Панель</h1>
+{% endblock %}
