@@ -11,9 +11,9 @@ def tariffs(request: Request):
     if not AuthHelper(request).is_admin():
         return redirect('login')
 
-    tariffs = Tariff.objects.all()
+    _tariffs = Tariff.objects.all()
 
-    return render(request, 'admin/tariffs.html', {'tariffs': tariffs})
+    return render(request, 'admin/tariffs.html', {'tariffs': _tariffs})
 
 
 @api_view(['GET', 'POST'])

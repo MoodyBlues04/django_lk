@@ -80,6 +80,7 @@ class Project(models.Model):
     avito_client_secret = models.CharField(max_length=255, null=False)
     image = models.CharField(max_length=255, null=True, default=None)
     bucket = models.CharField(max_length=255, null=True, default=None)
+    created_at = models.DateTimeField(auto_now_add=True)
 
 
 class Tariff(models.Model):

@@ -18,7 +18,7 @@ class UserManager(BaseUserManager):
             raise ValueError("The role must be `customer`")
         user = self.__create_user(email, password, **extra_fields)
         user.email_verified_at = None
-        user.email_verify_token = make_password(user.email + user.password)
+        user.email_verify_token = user.email + datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         user.save()
         return user
 

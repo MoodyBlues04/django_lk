@@ -8,7 +8,8 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
 from datetime import datetime
 from base.models import User
-from django.contrib.auth.decorators import login_required
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
 
 
 @api_view(['GET', 'POST'])
@@ -35,7 +36,7 @@ def _send_email_verification(request: Request, user):
         {
             'domain': current_site.domain,
             'id': user.id,
-            'token': user.email_verify_token,
+            'token': urlsafe_base64_encode(force_bytes(user.email_verify_token)),
         }
     )
     message = EmailMessage(subject, body, to=[user.email])
@@ -68,8 +69,9 @@ def login(request: Request):
 @api_view(['GET', 'POST'])
 def email_verify(request: Request):
     if request.GET.get('id') is not None:
-        user_id, token = request.GET['id'], request.GET['token']
+        user_id, token = request.GET['id'], force_str(urlsafe_base64_decode(request.GET['token']))
         user = User.objects.get(id=user_id)
+        # raise ValueError(user.email_verify_token, token, user.email_verify_token == token)
         if user is None or user.email_verify_token != token:
             return redirect('login')  # TODO set flash
         user.email_verified_at = datetime.now()
