@@ -149,10 +149,10 @@ WSGI_APPLICATION = 'AvitoLk.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': getenv('DATABASE_ENGINE', 'django.db.backends.mysql'),
-        'NAME': getenv('DATABASE_NAME', 'avito_lk'),
-        'USER': getenv('DATABASE_USER', 'root'),
-        'PASSWORD': getenv('DATABASE_PASSWORD', ''),
-        'HOST': getenv('DATABASE_HOST', '127.0.0.1'),
+        'NAME': getenv('DATABASE_NAME', 'default_db'),
+        'USER': getenv('DATABASE_USER', 'gen_user'),
+        'PASSWORD': getenv('DATABASE_PASSWORD', 'tSQ1X0:zTfmqAb'),
+        'HOST': getenv('DATABASE_HOST', '147.45.144.91'),
     }
 }
 
