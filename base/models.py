@@ -72,6 +72,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     def projects(self) -> list:
         return self.project_set.all()
 
+
 class Project(models.Model):
     class Status(models.TextChoices):
         ACTIVE = 'active'
@@ -88,6 +89,10 @@ class Project(models.Model):
     image = models.CharField(max_length=255, null=True, default=None)
     bucket = models.CharField(max_length=255, null=True, default=None)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def is_active(self) -> bool:
+        return self.status == self.Status.ACTIVE
 
 
 class Tariff(models.Model):

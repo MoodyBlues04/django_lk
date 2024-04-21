@@ -1,0 +1,41 @@
+{% extends "user/layout.html" %}
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h3>Create project</h3>
+                <div class="card">
+                    <div class="card-body">
+                        <form method="POST" action="{% url 'user.create_project' %}">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Имя</label>
+                                <input type="text" class="form-control" id="name" name="name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="avito_client_id" class="form-label">Client id Avito</label>
+                                <input type="text" class="form-control" id="avito_client_id" name="avito_client_id">
+                            </div>
+                            <div class="mb-3">
+                                <label for="avito_client_secret" class="form-label">Client secret Avito</label>
+                                <input type="text" class="form-control" id="avito_client_secret" name="avito_client_secret">
+                            </div>
+                            <div class="mb-3">
+                                <label for="time_web_token" class="form-label">TimeWeb token</label>
+                                <input type="text" class="form-control" id="time_web_token" name="time_web_token">
+                            </div>
+                            <div class="mb-3">
+                                <label for="bucket" class="form-label">Bucket</label>
+                                <input type="text" class="form-control" id="bucket" name="bucket">
+                            </div>
+                            <br>
+                            <div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

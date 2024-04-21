@@ -64,7 +64,7 @@
             <div class="d-flex align-items-center">
                 <span class="me-3">Привет, {{ user.username }}</span>
 
-                <a href="{% url 'project.create' %}" class="custom-btn btn btn-outline-secondary me-2">+ Новый проект</a>
+                <a href="{% url 'user.create_project' %}" class="custom-btn btn btn-outline-secondary me-2">+ Новый проект</a>
                 <a href="{% url 'logout' %}" class="custom-btn btn btn-outline-secondary">Выход</a>
             </div>
         </div>

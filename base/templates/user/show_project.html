@@ -1,0 +1,68 @@
+{% extends "user/layout.html" %}
+{% block content %}
+    <div class="container">
+        <h2>Проект: {{ project.name }}</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="d-flex justify-content-center">
+                    {#                    TODO project img #}
+                    <img src="#" alt="project-img">
+                </div>
+            </div>
+            <div class="col-md-8">
+
+                    <h5>Настройки</h5>
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <td>
+                                <small>sheet_id:</small>
+                                {{project.sheet_id}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <small>xml_id:</small>
+                                {{project.xml_id}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <small>TimeWeb token:</small>
+                                {{project.time_web_token}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <small>avito_client_id:</small>
+                                {{project.avito_client_id}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <small>avito_client_secret:</small>
+                                {{project.avito_client_secret}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <form action="{% url 'user.edit_project' project_id=project.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <div class="d-flex">
+                                        <label for="company" style="margin-top: 7px; margin-right: 10px">Bucket:</label>
+                                        <input type="text" class="form-control" style="border: none" id="bucket" name="bucket"
+                                               placeholder="not set"
+                                                {% if project.bucket is not None %} value="{{ project.bucket }}" {% endif %}>
+                                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                        </tr>
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

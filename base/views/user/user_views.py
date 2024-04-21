@@ -19,20 +19,20 @@ def home(request: Request):
 def profile(request: Request):
     if not request.user.is_authenticated:
         return redirect('login')
+
     if request.method == 'POST':
         serializer = UpdateUserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.update(request.user, serializer.data)
+
     return render(request, 'user/profile.html', {'professions': User.Profession.choices})
 
 
 @api_view(['GET'])
-def projects(request: Request):
-    pass
-
-
-@api_view(['GET'])
 def info(request: Request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+
     return render(request, 'user/info.html')
 
 
@@ -52,4 +52,5 @@ def faq(request: Request):
 
 @api_view(['GET'])
 def tariffs(request: Request):
-    pass
+    return redirect('home') # TODO tariffs chose
+
