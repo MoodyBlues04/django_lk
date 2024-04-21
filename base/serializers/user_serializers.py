@@ -52,3 +52,26 @@ class LoginUserSerializer(AuthSerializer):
         if user is None:
             raise serializers.ValidationError(f"Invalid credentials: {attrs['email']} {attrs['password']} {user}")
         return super().validate(attrs)
+
+
+class UpdateUserSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    username = serializers.CharField()
+    phone = serializers.CharField(allow_null=True)
+    company = serializers.CharField(allow_null=True)
+    profession = serializers.CharField(allow_null=False)
+    tg = serializers.CharField(allow_null=True)
+    # image = serializers.CharField(allow_null=True)
+
+    def create(self, validated_data):
+        return User.objects.create()
+
+    def update(self, instance: User, validated_data: dict) -> None:
+        instance.email = validated_data['email']
+        instance.phone = validated_data['phone']
+        instance.username = validated_data['username']
+        instance.company = validated_data['company']
+        instance.profession = validated_data['profession']
+        instance.tg = validated_data['tg']
+        # instance.image = validated_data['image']
+        instance.save()

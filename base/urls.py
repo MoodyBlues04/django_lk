@@ -20,6 +20,11 @@ urlpatterns = [
 
     # user
     path('', user_views.home, name='home'),  # todo landing for unauthorized
+    path('profile', user_views.profile, name='user.profile'),
+    path('projects', user_views.projects, name='user.projects'),
+    path('info', user_views.info, name='user.info'),
+    path('faq', user_views.faq, name='user.faq'),
+    path('tariffs', user_views.tariffs, name='user.tariffs'),
 
     # project
     path('project/create', project_views.create, name='project.create'),

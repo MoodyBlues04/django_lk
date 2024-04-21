@@ -1,0 +1,82 @@
+{% extends "user/layout.html" %}
+{% block content %}
+    <div class="container">
+        <h2>Профиль</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="d-flex justify-content-center">
+                    {#                    TODO profile img #}
+                    <img src="#" alt="profile-img">
+                </div>
+            </div>
+            <div class="col-md-8">
+                <form action="{% url 'user.profile' %}" method="POST">
+                    {% csrf_token %}
+
+                    <h5>Персональные данные</h5>
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <td>
+                                <label for="username">Имя</label>
+                                <br>
+                                <input type="text" class="form-control" style="border: none" id="username"
+                                       name="username" value="{{ user.username }}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="company">Компания</label>
+                                <br>
+                                <input type="text" class="form-control" style="border: none" id="company" name="company"
+                                       placeholder="not set"
+                                        {% if user.company is not None %} value="{{ user.company }}" {% endif %}>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="profession">Компания</label>
+                                <br>
+                                <select class="form-select" name="profession" aria-label="" style="border: none">
+                                    <option selected>{{ user.profession }}</option>
+                                    {% for val, name in professions %}
+                                        <option value="{{ val }}">{{ val }}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <h5>Средства связи</h5>
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <td>
+                                <label for="phone">Телефон</label>
+                                <br>
+                                <input type="text" class="form-control" style="border: none" id="phone" name="phone"
+                                       placeholder="not set"
+                                        {% if user.phone is not None %} value="{{ user.phone }}" {% endif %}>
+                            </td>
+                            <td>
+                                <label for="email">Почта</label>
+                                <br>
+                                <input type="text" class="form-control" style="border: none" id="email" name="email"
+                                       value="{{ user.email }}">
+                            </td>
+                            <td>
+                                <label for="tg">Telegram</label>
+                                <br>
+                                <input type="text" class="form-control" style="border: none" id="tg" name="tg"
+                                        placeholder="not set"
+                                        {% if user.tg is not None %} value="{{ user.tg }}" {% endif %}>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

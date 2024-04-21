@@ -4,5 +4,20 @@
     <li class="nav-item">
         <a class="nav-link" href="{% url 'home' %}">Главная</a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'user.profile' %}">Профиль</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'user.projects' %}">Проекты</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'user.info' %}">Справка</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'user.faq' %}">Центр поддержки</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'user.tariffs' %}">Тарифы</a>
+    </li>
 {% endblock %}
 {% block content %}{% endblock %}
