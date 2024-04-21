@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 from dotenv import load_dotenv
 from os import getenv
+import os
 
 load_dotenv()
 
@@ -29,8 +30,9 @@ SECRET_KEY = getenv('SECURITY_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['127.0.0.1', '94.228.124.196']
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 # Application definition
 
@@ -147,7 +149,7 @@ LOGGING = {
 DATABASES = {
     'default': {
         'ENGINE': getenv('DATABASE_ENGINE', 'django.db.backends.mysql'),
-        'NAME': getenv('DATABASE_NAME', 'form_parsing'),
+        'NAME': getenv('DATABASE_NAME', 'avito_lk'),
         'USER': getenv('DATABASE_USER', 'root'),
         'PASSWORD': getenv('DATABASE_PASSWORD', ''),
         'HOST': getenv('DATABASE_HOST', '127.0.0.1'),
