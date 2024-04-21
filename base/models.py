@@ -136,6 +136,10 @@ class FAQ(models.Model):
         return json.loads(self.links)
 
     @property
+    def links_list(self) -> list:
+        return self.links_dict.items()
+
+    @property
     def links_text(self) -> str:
         res = ''
         for label, link in self.links_dict.items():

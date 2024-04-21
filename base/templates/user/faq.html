@@ -1,0 +1,30 @@
+{% extends "user/layout.html" %}
+{% block content %}
+    <div class="container">
+        <h2>Центр поддержки</h2>
+        <div class="row justify-content-center mb-10" style="margin-bottom: 10px">
+            <div class="col-md-6">
+                <form action="{% url 'user.faq' %}" method="GET">
+                    <input type="text" class="form-control" placeholder="search" name="search">
+                    <input type="submit" hidden>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            {% for faq in faqs %}
+                <div class="card" style="margin-bottom: 10px">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ faq.title }}</h5>
+                        <div class="card-text">{{ faq.content }}</div>
+                        {% if faq.links is not None %}
+                            <br>
+                            {% for label, link in faq.links_list %}
+                                <a href="{{ link }}" class="btn btn-primary mr-5">{{ label }}</a>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

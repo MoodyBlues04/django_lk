@@ -1,7 +1,7 @@
 from rest_framework.request import Request
 from django.shortcuts import render, redirect
 from rest_framework.decorators import api_view
-from base.models import User
+from base.models import User, FAQ
 from base.serializers.user_serializers import UpdateUserSerializer
 
 
@@ -33,12 +33,21 @@ def projects(request: Request):
 
 @api_view(['GET'])
 def info(request: Request):
-    pass
+    return render(request, 'user/info.html')
 
 
 @api_view(['GET'])
 def faq(request: Request):
-    pass
+    if not request.user.is_authenticated:
+        return redirect('login')
+
+    faqs = FAQ.objects.filter(is_active=True)
+
+    if request.GET.get('search'):
+        from django.db.models import Q
+        faqs = faqs.filter(Q(title__contains=request.GET['search']) | Q(content__contains=request.GET['search']))
+
+    return render(request, 'user/faq.html', {'faqs': faqs})
 
 
 @api_view(['GET'])

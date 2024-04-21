@@ -6,7 +6,6 @@ from .views.admin import admin_views, faq_views, tariff_views
 urlpatterns = [
     # admin
     path('admin/', admin_views.home, name='admin.home'),
-    path('admin/profile', admin_views.profile, name='admin.profile'),  # TODO
     path('admin/projects', admin_views.projects, name='admin.projects'),  # TODO
     path('admin/faq/<int:faq_id>/edit', faq_views.edit_faq, name='admin.edit_faq'),
     path('admin/faq/<int:faq_id>/delete', faq_views.delete_faq, name='admin.delete_faq'),
@@ -21,10 +20,10 @@ urlpatterns = [
     # user
     path('', user_views.home, name='home'),  # todo landing for unauthorized
     path('profile', user_views.profile, name='user.profile'),
-    path('projects', user_views.projects, name='user.projects'),
-    path('info', user_views.info, name='user.info'),
-    path('faq', user_views.faq, name='user.faq'),
-    path('tariffs', user_views.tariffs, name='user.tariffs'),
+    path('projects', user_views.projects, name='user.projects'), # TODO
+    path('info', user_views.info, name='user.info'), # TODO
+    path('faq', user_views.faq, name='user.faq'), # TODO
+    path('tariffs', user_views.tariffs, name='user.tariffs'), # TODO
 
     # project
     path('project/create', project_views.create, name='project.create'),

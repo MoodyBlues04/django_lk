@@ -17,7 +17,7 @@ class FAQCreateSerializer(serializers.Serializer):
     def validate_links(self, value: str) -> str:
         import re
         label_pattern = re.compile('^[a-zA-Z0-9-_.]+$')
-        link_pattern = re.compile('^https?://[a-zA-Z0-9-_.]+$')
+        link_pattern = re.compile('^https?://([a-zA-Z0-9-_.:]+/?)*$')
         for idx, line in enumerate(value.splitlines()):
             if line.count(' ') != 1:
                 raise serializers.ValidationError('Invalid links format')
