@@ -1,1 +1,38 @@
 {% extends "user/layout.html" %}
+{% block content %}
+    <div class="container">
+        <h2>Главная</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <h5>Tariff</h5>
+                <div class="card">
+                    <div class="card-body">
+                        {% if user.tariff is None %}
+                            No tariff
+                        {% endif  %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <h5>Last projects</h5>
+                <div class="row">
+                    {% if not user.has_projects %}
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">No projects</div>
+                            </div>
+                        </div>
+                    {% else %}
+                        {% for project in user.projects %}
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">{{ project.name }}</div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

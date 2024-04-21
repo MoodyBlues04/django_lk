@@ -64,6 +64,13 @@ class User(AbstractBaseUser, PermissionsMixin):
     def role_label(self) -> str:
         return self.Role(self.role).label
 
+    @property
+    def has_projects(self) -> bool:
+        return len(self.projects) > 0
+
+    @property
+    def projects(self) -> list:
+        return self.project_set.all()
 
 class Project(models.Model):
     class Status(models.TextChoices):
