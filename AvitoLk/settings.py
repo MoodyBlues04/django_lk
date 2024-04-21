@@ -150,6 +150,7 @@ DATABASES = {
         'NAME': getenv('DATABASE_NAME', 'form_parsing'),
         'USER': getenv('DATABASE_USER', 'root'),
         'PASSWORD': getenv('DATABASE_PASSWORD', ''),
+        'HOST': getenv('DATABASE_HOST', '127.0.0.1'),
     }
 }
 
