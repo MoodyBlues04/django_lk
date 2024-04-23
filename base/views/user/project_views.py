@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from rest_framework.decorators import api_view
 from base.models import Project
 from base.serializers.project_serializers import CreateProjectSerializer
+from django.contrib import messages
 
 
 @api_view(['GET'])
@@ -38,11 +39,14 @@ def create_project(request: Request):
 def edit_project(request: Request, project_id: int):
     if not request.user.is_authenticated:
         return redirect('login')
-    if not request.data['bucket']:
-        raise ValueError('Incorrect bucket')
 
-    project = Project.objects.get(id=project_id)
+    if not request.data['bucket']:
+        messages.warning(request, 'Incorrect bucket')
+        return redirect('user.projects')
+
+    project = Project.objects.filter(id=project_id).first()
     if project is None:
+        messages.warning(request, 'Incorrect project id')
         return redirect('user.projects')
 
     project.bucket = request.data.get('bucket')
@@ -56,6 +60,9 @@ def show_project(request: Request, project_id: int):
     if not request.user.is_authenticated:
         return redirect('login')
 
-    project = Project.objects.get(id=project_id)
+    project = Project.objects.filter(id=project_id).first()
+    if project is None:
+        messages.warning(request, 'Incorrect project id')
+        return redirect('user.projects')
 
     return render(request, 'user/show_project.html', {'project': project})

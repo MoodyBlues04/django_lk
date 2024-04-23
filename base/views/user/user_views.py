@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect
 from rest_framework.decorators import api_view
 from base.models import User, FAQ, Tariff
 from base.serializers.user_serializers import UpdateUserSerializer
+from django.contrib import messages
+from django.db.models import Q
 
 
 @api_view(['GET'])
@@ -46,7 +48,6 @@ def faq(request: Request):
     faqs = FAQ.objects.filter(is_active=True)
 
     if request.GET.get('search'):
-        from django.db.models import Q
         faqs = faqs.filter(Q(title__contains=request.GET['search']) | Q(content__contains=request.GET['search']))
 
     return render(request, 'user/faq.html', {'faqs': faqs})
@@ -67,9 +68,10 @@ def buy_tariff(request: Request, tariff_id: int):
     if not request.user.is_authenticated:
         return redirect('login')
 
-    tariff = Tariff.objects.get(id=tariff_id)
+    tariff = Tariff.objects.filter(id=tariff_id).first()
     if tariff is None:
-        return redirect('user.tariffs')  # TODO set flash
+        messages.warning(request, 'Incorrect tariff id')
+        return redirect('user.tariffs')
 
     # TODO create payment & redirect to payment API page
     tariff.user_set.add(request.user)

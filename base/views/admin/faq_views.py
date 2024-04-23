@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view
 from base.helpers.auth_helpers import AuthHelper
 from base.models import FAQ
 from base.serializers.faq_serializers import FAQCreateSerializer
+from django.contrib import messages
 
 
 @api_view(['GET'])
@@ -33,9 +34,10 @@ def edit_faq(request: Request, faq_id: int):
     if not AuthHelper(request).is_admin():
         return redirect('login')
 
-    _faq = FAQ.objects.get(id=faq_id)
+    _faq = FAQ.objects.filter(id=faq_id).first()
     if _faq is None:
-        raise ValueError('Incorrect faq id')
+        messages.warning(request, 'Incorrect faq id')
+        return redirect('admin.faq')
 
     if request.method == 'POST':
         serializer = FAQCreateSerializer(data=request.data)
@@ -51,9 +53,10 @@ def delete_faq(request: Request, faq_id: int):
     if not AuthHelper(request).is_admin():
         return redirect('login')
 
-    _faq = FAQ.objects.get(id=faq_id)
+    _faq = FAQ.objects.filter(id=faq_id).first()
     if _faq is None:
-        raise ValueError('Incorrect faq id')
+        messages.warning(request, 'Incorrect faq id')
+        return redirect('admin.faq')
 
     _faq.delete()
 

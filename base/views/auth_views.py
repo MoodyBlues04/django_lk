@@ -10,6 +10,7 @@ from datetime import datetime
 from base.models import User
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
+from django.contrib import messages
 
 
 @api_view(['GET', 'POST'])
@@ -55,8 +56,10 @@ def login(request: Request):
 
         user = authenticate(request, email=serializer.data['email'], password=serializer.data['password'])
         if user is None:
-            return redirect('login')  # TODO set flash
+            messages.warning(request, 'Incorrect credentials')
+            return redirect('login')
         if user.email_verified_at is None:
+            messages.info(request, 'You must verify your email')
             return redirect('email_verify')
 
         auth_login(request, user)
@@ -71,13 +74,15 @@ def email_verify(request: Request):
     if request.GET.get('id') is not None:
         user_id, token = request.GET['id'], force_str(urlsafe_base64_decode(request.GET['token']))
         user = User.objects.get(id=user_id)
-        # raise ValueError(user.email_verify_token, token, user.email_verify_token == token)
         if user is None or user.email_verify_token != token:
-            return redirect('login')  # TODO set flash
+            messages.warning(request, 'Incorrect email verify token')
+            return redirect('login')
         user.email_verified_at = datetime.now()
         user.email_verify_token = None
         user.save()
-        return redirect('login')  # TODO set flash
+
+        messages.info(request, 'Correct email verify token. Just log in')
+        return redirect('login')
 
     return render(request, 'auth/email_verify.html')
 

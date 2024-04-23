@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from rest_framework.decorators import api_view
 from base.helpers.auth_helpers import AuthHelper
 from base.models import User, Project
+from django.contrib import messages
 
 
 @api_view(['GET', 'POST']) # todo not everywhere
