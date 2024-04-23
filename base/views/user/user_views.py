@@ -19,6 +19,8 @@ def home(request: Request):
 def profile(request: Request):
     if not request.user.is_authenticated:
         return redirect('login')
+    if request.user.is_admin():
+        return redirect('admin.home')
 
     if request.method == 'POST':
         serializer = UpdateUserSerializer(data=request.data)

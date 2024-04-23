@@ -9,6 +9,8 @@ from base.serializers.project_serializers import CreateProjectSerializer
 def projects(request: Request):
     if not request.user.is_authenticated:
         return redirect('login')
+    if request.user.is_admin():
+        return redirect('admin.home')
 
     _projects = request.user.project_set.all()
 
