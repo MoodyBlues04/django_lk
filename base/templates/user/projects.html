@@ -1,5 +1,6 @@
 {% extends "user/layout.html" %}
 {% block content %}
+    {% load static %}
     <div class="container">
         <h2>Проекты</h2>
         <br>
@@ -18,9 +19,9 @@
                     <a href="{% url 'user.show_project' project_id=project.id %}" style="text-decoration: none; color: black">
                         <div class="card">
                             {% if project.is_active %}
-                                <img src="#" alt="active-img">
+                                <img src="{% static 'img/active.png' %}" alt="active-img" width="150" style="margin-left: 25%">
                             {% else %}
-                                <img src="#" alt="inactive-img">
+                                <img src="{% static 'img/inactive.png' %}" alt="inactive-img" width="150" style="margin-left: 25%">
                             {% endif %}
 
                             <div class="card-body">
