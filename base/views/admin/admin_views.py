@@ -2,7 +2,7 @@ from rest_framework.request import Request
 from django.shortcuts import render, redirect
 from rest_framework.decorators import api_view
 from base.helpers.auth_helpers import AuthHelper
-from base.models import User
+from base.models import User, Project
 
 
 @api_view(['GET', 'POST']) # todo not everywhere
@@ -22,11 +22,13 @@ def profile(request: Request):
 
 
 @api_view(['GET', 'POST'])
-def projects(request: Request):
+def user_projects(request: Request):
     if not AuthHelper(request).is_admin():
         return redirect('login')
 
-    return render(request, 'admin/home.html')
+    projects = Project.objects.all()
+
+    return render(request, 'admin/projects.html', {'projects': projects})
 
 
 @api_view(['GET', 'POST'])

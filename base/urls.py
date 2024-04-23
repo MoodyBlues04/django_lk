@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import auth_views, project_views
+from .views import auth_views
 from .views.user import user_views, project_views
 from .views.admin import admin_views, faq_views, tariff_views
 
@@ -15,6 +15,7 @@ urlpatterns = [
     path('admin/tariffs/<int:tariff_id>/delete', tariff_views.delete_tariff, name='admin.delete_tariff'),
     path('admin/tariffs/create', tariff_views.create_tariff, name='admin.create_tariff'),
     path('admin/tariffs', tariff_views.tariffs, name='admin.tariffs'),
+    path('admin/user-projects', admin_views.user_projects, name='admin.user_projects'),
 
     # user
     path('', user_views.home, name='home'),  # todo landing for unauthorized

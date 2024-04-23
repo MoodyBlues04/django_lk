@@ -1,0 +1,41 @@
+{% extends "admin/layout.html" %}
+{% block content %}
+    <div class="container">
+        <h2>Projects</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">User</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">status</th>
+                    <th scope="col">sheet_id</th>
+                    <th scope="col">xml_id</th>
+                    <th scope="col">time_web_token</th>
+                    <th scope="col">avito_client_id</th>
+                    <th scope="col">avito_client_secret</th>
+                    <th scope="col">bucket</th>
+                    <th scope="col">created_at</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for project in projects %}
+                    <tr>
+                        <th scope="row">{{ project.id }}</th>
+                        <td>{{ project.user.username }}</td>
+                        <td>{{ project.name }}</td>
+                        <td>{{ project.status }}</td>
+                        <td>{{ project.sheet_id }}</td>
+                        <td>{{ project.xml_id }}</td>
+                        <td>{{ project.time_web_token }}</td>
+                        <td>{{ project.avito_client_id }}</td>
+                        <td>{{ project.avito_client_secret }}</td>
+                        <td>{{ project.bucket }}</td>
+                        <td>{{ project.created_at }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+{% endblock %}
