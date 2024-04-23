@@ -4,24 +4,24 @@
     <div class="container">
         <h2>Проекты</h2>
         <br>
-        <div class="d-flex" style="justify-content: space-between">
+        <div class="d-flex" style="justify-content: space-between; margin-bottom: 10px">
             <div class="d-flex">
-                <a href="#" class="d-flex btn btn-secondary btn-sm" style="margin-right: 10px">Все проекты</a>
-                <a href="#" class="d-flex btn btn-sm" style="margin-right: 10px">Завершенные</a>
-                <a href="#" class="d-flex btn btn-sm">Активные</a>
+                <a href="{% url 'user.projects' %}" class="d-flex btn btn-secondary btn-sm" style="margin-right: 10px">Все проекты</a>
+                <a href="{% url 'user.projects' %}?status=inactive" class="d-flex btn btn-sm" style="margin-right: 10px">Завершенные</a>
+                <a href="{% url 'user.projects' %}?status=active" class="d-flex btn btn-sm">Активные</a>
             </div>
 
             <a href="#" class="d-flex">Проверить XML на avito</a>
         </div>
         <div class="row justify-content-center">
             {% for project in projects %}
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <a href="{% url 'user.show_project' project_id=project.id %}" style="text-decoration: none; color: black">
                         <div class="card">
                             {% if project.is_active %}
-                                <img src="{% static 'img/active.png' %}" alt="active-img" width="150" style="margin-left: 25%">
+                                <img src="{% static 'img/active.png' %}" alt="active-img" width="150" style="margin-left: 20%">
                             {% else %}
-                                <img src="{% static 'img/inactive.png' %}" alt="inactive-img" width="150" style="margin-left: 25%">
+                                <img src="{% static 'img/inactive.png' %}" alt="inactive-img" width="150" style="margin-left: 20%">
                             {% endif %}
 
                             <div class="card-body">

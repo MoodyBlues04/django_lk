@@ -31,6 +31,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     image = models.CharField(max_length=255, null=True, default=None)
     email_verify_token = models.CharField(max_length=255, null=True, default=None)
     email_verified_at = models.DateTimeField(null=True, default=None)
+    tariff = models.ForeignKey('Tariff', on_delete=models.SET_NULL, null=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'password', 'role']
@@ -86,7 +87,6 @@ class Project(models.Model):
     time_web_token = models.CharField(max_length=255, null=False)
     avito_client_id = models.CharField(max_length=255, null=False)
     avito_client_secret = models.CharField(max_length=255, null=False)
-    image = models.CharField(max_length=255, null=True, default=None)
     bucket = models.CharField(max_length=255, null=True, default=None)
     created_at = models.DateTimeField(auto_now_add=True)
 

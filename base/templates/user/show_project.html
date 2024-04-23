@@ -5,8 +5,12 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="d-flex justify-content-center">
-                    {#                    TODO project img #}
-                    <img src="#" alt="project-img">
+                    {% load static %}
+                    {% if project.is_active %}
+                        <img src="{% static 'img/active.png' %}" alt="active-img">
+                    {% else %}
+                        <img src="{% static 'img/inactive.png' %}" alt="inactive-img">
+                    {% endif %}
                 </div>
             </div>
             <div class="col-md-8">

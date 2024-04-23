@@ -22,7 +22,8 @@ urlpatterns = [
     path('projects', project_views.projects, name='user.projects'),
     path('info', user_views.info, name='user.info'),
     path('faq', user_views.faq, name='user.faq'),
-    path('tariffs', user_views.tariffs, name='user.tariffs'), # TODO
+    path('tariffs', user_views.tariffs, name='user.tariffs'),
+    path('tariffs/<int:tariff_id>/buy', user_views.buy_tariff, name='user.buy_tariff'),
 
     # project
     path('project', project_views.projects, name='user.projects'),

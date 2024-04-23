@@ -12,6 +12,9 @@ def projects(request: Request):
 
     _projects = request.user.project_set.all()
 
+    if request.GET.get('status') is not None:
+        _projects = _projects.filter(status=request.GET['status'])
+
     return render(request, 'user/projects.html', {'projects': _projects})
 
 

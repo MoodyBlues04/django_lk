@@ -1,7 +1,7 @@
 from rest_framework.request import Request
 from django.shortcuts import render, redirect
 from rest_framework.decorators import api_view
-from base.models import User, FAQ
+from base.models import User, FAQ, Tariff
 from base.serializers.user_serializers import UpdateUserSerializer
 
 
@@ -52,5 +52,26 @@ def faq(request: Request):
 
 @api_view(['GET'])
 def tariffs(request: Request):
-    return redirect('home') # TODO tariffs chose
+    if not request.user.is_authenticated:
+        return redirect('login')
+
+    _tariffs = Tariff.objects.all()
+
+    return render(request, 'user/tariffs.html', {'tariffs': _tariffs})
+
+
+@api_view(['GET'])
+def buy_tariff(request: Request, tariff_id: int):
+    if not request.user.is_authenticated:
+        return redirect('login')
+
+    tariff = Tariff.objects.get(id=tariff_id)
+    if tariff is None:
+        return redirect('user.tariffs')  # TODO set flash
+
+    # TODO create payment & redirect to payment API page
+    tariff.user_set.add(request.user)
+    # temporary
+
+    return redirect('user.tariffs')
 

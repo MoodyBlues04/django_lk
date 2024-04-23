@@ -1,16 +1,17 @@
-{% extends "admin/layout.html" %}
+{% extends "user/layout.html" %}
 {% block content %}
+    {% load static %}
     <div class="container">
         <h2>Tariffs</h2>
-        <a href="{% url 'admin.create_tariff' %}" class="btn btn-primary">Create</a>
+        <br>
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">name</th>
-                    <th scope="col">price</th>
-                    <th scope="col">duration</th>
-                    <th scope="col">adverts_count</th>
+                    <th scope="col">Тариф</th>
+                    <th scope="col">Стоимость</th>
+                    <th scope="col">Длительность</th>
+                    <th scope="col">Количество объявлений</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -23,8 +24,7 @@
                         <td>{{ tariff.duration }} days</td>
                         <td>{{ tariff.adverts_count }}</td>
                         <td>
-                            <a class="btn btn-primary" href="{% url 'admin.edit_tariff' tariff_id=tariff.id %}">Edit</a>
-                            <a class="btn btn-danger" href="{% url 'admin.delete_tariff' tariff_id=tariff.id %}">Delete</a>
+                            <a class="btn btn-success" href="{% url 'user.buy_tariff' tariff_id=tariff.id %}">Buy</a>
                         </td>
                     </tr>
                 {% endfor %}
