@@ -9,15 +9,14 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+import sys
 from pathlib import Path
 from dotenv import load_dotenv, find_dotenv
-from os import getenv
 import os
 
-load_dotenv(find_dotenv())
+load_dotenv(sys.path[1])
 
-raise ValueError(getenv('GOOGLE_API_CREDENTIALS_PATH'))
+raise ValueError(sys.path[1], os.getenv('GOOGLE_API_CREDENTIALS_PATH'))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
