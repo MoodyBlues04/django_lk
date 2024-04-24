@@ -12,3 +12,7 @@
 6. ```python manage.py makemigrations && python manage.py migrate``` for database set up
 7. ```python manage.py createsuperuser``` for admin user seeding (you cannot register admin)
 8. ```python manage.py runserver``` for local usage
+
+## Tips & tricks
++ ```python manage.py collectstatic``` updates templates
++ ```systemctl restart apache2``` restarts server
