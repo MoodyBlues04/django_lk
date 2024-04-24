@@ -14,7 +14,7 @@ from pathlib import Path
 from dotenv import load_dotenv, find_dotenv
 import os
 
-load_dotenv(sys.path[0])
+load_dotenv(sys.path[0] + '/.env')
 
 raise ValueError(sys.path[0], os.getenv('GOOGLE_API_CREDENTIALS_PATH'))
 
