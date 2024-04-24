@@ -7,14 +7,16 @@
                 <h5>Tariff</h5>
                 <div class="card">
                     <div class="card-body">
-                        {% if user.tariff is None %}
+                        {% if not user.subscription %}
                             No tariff
                         {% else %}
-                            <h5>{{ user.tariff.name }}</h5>
+                            <h5>{{ user.subscription.tariff.name }}</h5>
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item"><small>price: </small>{{ user.tariff.price }}</li>
-                                <li class="list-group-item"><small>duration: </small>{{ user.tariff.duration }}</li>
-                                <li class="list-group-item"><small>adverts_count: </small>{{ user.tariff.adverts_count }}</li>
+                                <li class="list-group-item"><small>price: </small>{{ user.subscription.tariff.price }}</li>
+                                <li class="list-group-item"><small>start: </small>{{ user.subscription.period_start }}</li>
+                                <li class="list-group-item"><small>end: </small>{{ user.subscription.period_end }}</li>
+                                <li class="list-group-item"><small>adverts_count: </small>{{ user.subscription.tariff.adverts_count }}</li>
+                                <li class="list-group-item"><small>status: </small>{{ user.subscription.status }}</li>
                             </ul>
                         {% endif %}
                         <br>
@@ -35,20 +37,22 @@
                         {% load static %}
                         {% for project in user.projects %}
                             <div class="col-md-5">
-                                <div class="card" style="margin-bottom: 25px">
-                                    {% if project.is_active %}
-                                        <img src="{% static 'img/active.png' %}" alt="active-img" width="150"
-                                             style="margin-left: 25%">
-                                    {% else %}
-                                        <img src="{% static 'img/inactive.png' %}" alt="inactive-img" width="150"
-                                             style="margin-left: 25%">
-                                    {% endif %}
-                                    <div class="card-body">
-                                        <h5>
-                                            {{ project.name }}
-                                        </h5>
+                                <a href="{% url 'user.show_project' project_id=project.id %}" style="text-decoration: none; color: black">
+                                    <div class="card" style="margin-bottom: 25px">
+                                        {% if project.is_active %}
+                                            <img src="{% static 'img/active.png' %}" alt="active-img" width="150"
+                                                 style="margin-left: 25%">
+                                        {% else %}
+                                            <img src="{% static 'img/inactive.png' %}" alt="inactive-img" width="150"
+                                                 style="margin-left: 25%">
+                                        {% endif %}
+                                        <div class="card-body">
+                                            <h5>
+                                                {{ project.name }}
+                                            </h5>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                         {% endfor %}
                     {% endif %}

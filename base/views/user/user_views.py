@@ -1,7 +1,7 @@
 from rest_framework.request import Request
 from django.shortcuts import render, redirect
 from rest_framework.decorators import api_view
-from base.models import User, FAQ, Tariff
+from base.models import User, FAQ, Subscription, Tariff
 from base.serializers.user_serializers import UpdateUserSerializer
 from django.contrib import messages
 from django.db.models import Q
@@ -74,7 +74,7 @@ def buy_tariff(request: Request, tariff_id: int):
         return redirect('user.tariffs')
 
     # TODO create payment & redirect to payment API page
-    tariff.user_set.add(request.user)
+    tariff.create_subscription(request.user)
     # temporary
 
     return redirect('user.tariffs')

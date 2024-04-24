@@ -15,16 +15,24 @@ class CreateProjectSerializer(serializers.Serializer):
     avito_client_secret = serializers.CharField()
     bucket = serializers.CharField()
 
+    __sheet_id: str | None = None
+
     def __init__(self, user: User, data: dict) -> None:
         self.__user = user
         super().__init__(data=data)
 
+    def set_sheet_id(self, sheet_id: str) -> None:
+        self.__sheet_id = sheet_id
+
     def create(self, validated_data: dict) -> Project:
+        if self.__sheet_id is None:
+            raise ValueError('You must set client sheet id')
+
         return self.__user.project_set.create(
             name=validated_data['name'],
             status=Project.Status.ACTIVE,
-            sheet_id="12345", # TODO generate normally
-            xml_id="12345", # TODO generate normally
+            sheet_id=self.__sheet_id,
+            xml_id=self.__sheet_id,
             time_web_token=validated_data['time_web_token'],
             avito_client_id=validated_data['avito_client_id'],
             avito_client_secret=validated_data['avito_client_secret'],

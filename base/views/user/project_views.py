@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view
 from base.models import Project
 from base.serializers.project_serializers import CreateProjectSerializer
 from django.contrib import messages
+from base.helpers.gsheets_service import GoogleSheetsService
 
 
 @api_view(['GET'])
@@ -25,10 +26,18 @@ def projects(request: Request):
 def create_project(request: Request):
     if not request.user.is_authenticated:
         return redirect('login')
+    if not request.user.can_create_project():
+        messages.warning(request, 'Buy tariff, now you cannot create projects')
+        return redirect('user.tariffs')
 
     if request.method == 'POST':
         serializer = CreateProjectSerializer(request.user, request.data)
         serializer.is_valid(raise_exception=True)
+
+        # sheet_id = GoogleSheetsService.copy_avito_sheet(request.user.email)
+        sheet_id = GoogleSheetsService.copy_avito_sheet('sokant2005@gmail.com')
+
+        serializer.set_sheet_id(sheet_id)
         serializer.save()
         return redirect('user.projects')
 

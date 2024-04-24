@@ -5,3 +5,4 @@ venv/
 logs/*
 .idea/
 /static/
+credentials.json

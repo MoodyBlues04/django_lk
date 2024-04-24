@@ -1,10 +1,9 @@
 from __future__ import annotations
 
+from datetime import datetime, timedelta
 import json
-
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
-from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth import authenticate
 from .managers import UserManager
 
@@ -31,7 +30,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     image = models.CharField(max_length=255, null=True, default=None)
     email_verify_token = models.CharField(max_length=255, null=True, default=None)
     email_verified_at = models.DateTimeField(null=True, default=None)
-    tariff = models.ForeignKey('Tariff', on_delete=models.SET_NULL, null=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'password', 'role']
@@ -73,6 +71,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     def projects(self) -> list:
         return self.project_set.all()
 
+    def can_create_project(self) -> bool:
+        return (self.subscription and self.subscription.status == Subscription.Status.ACTIVE
+                and self.subscription.period_end > datetime.now())
+
 
 class Project(models.Model):
     class Status(models.TextChoices):
@@ -101,6 +103,14 @@ class Tariff(models.Model):
     duration = models.PositiveIntegerField(default=0, null=False)
     adverts_count = models.PositiveIntegerField(default=0, null=False)
 
+    def create_subscription(self, user: User, status: str = 'active') -> Subscription:
+        return self.subscription_set.create(
+            user=user,
+            period_start=datetime.now(),
+            period_end=datetime.now() + timedelta(days=self.duration),
+            status=status
+        )
+
 
 class Payment(models.Model):
     class Status(models.TextChoices):
@@ -121,7 +131,7 @@ class Subscription(models.Model):
         ACTIVE = 'active'
         INACTIVE = 'inactive'
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     tariff = models.ForeignKey(Tariff, on_delete=models.SET_NULL, null=True)
     period_start = models.DateField()
     period_end = models.DateField()
