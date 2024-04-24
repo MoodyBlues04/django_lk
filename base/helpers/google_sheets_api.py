@@ -91,10 +91,8 @@ class GspReadApi:
         ]
         credentials = json.load(open(service_file))
 
-        api = GoogleSheetsApi(src_sheet_id)
-        raise ValueError(api.sheet.worksheets())
-
         client = gspread.service_account_from_dict(credentials, scopes)
+        raise ValueError(client)
         sheet = client.open_by_key(src_sheet_id)
         raise ValueError(sheet.worksheets())
         sheet = client.copy(file_id=src_sheet_id, title=desc_title, copy_permissions=False)
