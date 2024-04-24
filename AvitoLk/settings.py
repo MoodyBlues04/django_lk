@@ -16,7 +16,6 @@ import os
 
 load_dotenv(sys.path[0] + '/.env')
 
-raise ValueError(sys.path[0], os.getenv('GOOGLE_API_CREDENTIALS_PATH'))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = getenv('SECURITY_KEY', 'django-insecure-heka7srlrc8f$gv(f#9cf3ov9yzo00rjw_1mbslh*oxi+k%u83')
+SECRET_KEY = os.getenv('SECURITY_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -149,11 +148,11 @@ WSGI_APPLICATION = 'AvitoLk.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': getenv('DATABASE_ENGINE', 'django.db.backends.mysql'),
-        'NAME': getenv('DATABASE_NAME', 'default_db'),
-        'USER': getenv('DATABASE_USER', 'gen_user'),
-        'PASSWORD': getenv('DATABASE_PASSWORD', 'tSQ1X0:zTfmqAb'),
-        'HOST': getenv('DATABASE_HOST', '147.45.144.91'),
+        'ENGINE': os.getenv('DATABASE_ENGINE'),
+        'NAME': os.getenv('DATABASE_NAME'),
+        'USER': os.getenv('DATABASE_USER'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+        'HOST': os.getenv('DATABASE_HOST'),
     }
 }
 
@@ -213,7 +212,7 @@ EMAIL_HOST = 'smtp.mail.ru'
 EMAIL_USE_TLS = False
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
-SERVER_EMAIL = getenv('EMAIL_USERNAME', 'sokant2005@mail.ru')
-DEFAULT_FROM_EMAIL = getenv('EMAIL_USERNAME', 'sokant2005@mail.ru')
-EMAIL_HOST_USER = getenv('EMAIL_USERNAME', 'sokant2005@mail.ru')
-EMAIL_HOST_PASSWORD = getenv('EMAIL_PASSWORD', 'jjvvwpAdai6eTp0AUv9w')
+SERVER_EMAIL = os.getenv('EMAIL_USERNAME')
+DEFAULT_FROM_EMAIL = os.getenv('EMAIL_USERNAME')
+EMAIL_HOST_USER = os.getenv('EMAIL_USERNAME')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASSWORD')
