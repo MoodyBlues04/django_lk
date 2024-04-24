@@ -72,8 +72,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.project_set.all()
 
     def can_create_project(self) -> bool:
-        return (self.subscription and self.subscription.status == Subscription.Status.ACTIVE
+        return (self.has_subscription() and self.subscription.status == Subscription.Status.ACTIVE
                 and self.subscription.period_end > datetime.now())
+
+    def has_subscription(self) -> bool:
+        return hasattr(self, 'subscription') and self.subscription is not None
 
 
 class Project(models.Model):
