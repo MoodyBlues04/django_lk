@@ -11,11 +11,11 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 from os import getenv
 import os
 
-load_dotenv()
+load_dotenv(find_dotenv())
 
 raise ValueError(getenv('GOOGLE_API_CREDENTIALS_PATH'))
 
