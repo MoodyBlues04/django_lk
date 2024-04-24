@@ -17,8 +17,7 @@ import os
 
 load_dotenv()
 
-print(getenv('GOOGLE_API_CREDENTIALS_PATH'))
-exit(0)
+raise ValueError(getenv('GOOGLE_API_CREDENTIALS_PATH'))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
