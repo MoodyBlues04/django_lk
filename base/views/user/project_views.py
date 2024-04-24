@@ -34,8 +34,7 @@ def create_project(request: Request):
         serializer = CreateProjectSerializer(request.user, request.data)
         serializer.is_valid(raise_exception=True)
 
-        # sheet_id = GoogleSheetsService.copy_avito_sheet(request.user.email)
-        sheet_id = GoogleSheetsService.copy_avito_sheet('sokant2005@gmail.com')
+        sheet_id = GoogleSheetsService.copy_avito_sheet()
 
         serializer.set_sheet_id(sheet_id)
         serializer.save()

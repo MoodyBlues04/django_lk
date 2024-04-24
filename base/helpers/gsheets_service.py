@@ -9,6 +9,6 @@ class GoogleSheetsService:
         self.__api = GoogleSheetsApi(sheet_id)
 
     @classmethod
-    def copy_avito_sheet(cls, user_email: str) -> str:
+    def copy_avito_sheet(cls) -> str:
         """ Copies default avito table, gives user perm to write and returns sheet id """
-        return GspReadApi.copy(cls.__AVITO_SHEET_ID, 'Новая Таблица Avito', user_email)
+        return GspReadApi.copy(cls.__AVITO_SHEET_ID, 'Новая Таблица Avito')

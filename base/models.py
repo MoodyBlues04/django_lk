@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 import json
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
@@ -73,7 +73,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def can_create_project(self) -> bool:
         return (self.has_subscription() and self.subscription.status == Subscription.Status.ACTIVE
-                and self.subscription.period_end > datetime.now())
+                and self.subscription.period_end > date.today())
 
     def has_subscription(self) -> bool:
         return hasattr(self, 'subscription') and self.subscription is not None

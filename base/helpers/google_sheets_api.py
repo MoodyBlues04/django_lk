@@ -78,13 +78,13 @@ class GoogleSheetsApi:
 
 class GspReadApi:
     @classmethod
-    def copy(cls, src_sheet_id: str, desc_title: str, email_to_share: str) -> str:
+    def copy(cls, src_sheet_id: str, desc_title: str) -> str:
         """ Returns created sheet id """
         service_file = getenv('GOOGLE_API_CREDENTIALS_PATH')
         credentials = json.load(open(service_file))
         gc = gspread.service_account_from_dict(credentials)
         sheet = gc.copy(src_sheet_id, desc_title)
-        sheet.share(email_to_share, perm_type='user', role='writer')
+        sheet.share(None, perm_type='anyone', role='writer')
         return sheet.id
 
 
