@@ -11,6 +11,10 @@ class GoogleSheetsApi:
         self.__sheet = self.__client.open_by_key(sheet_id)
         self.__worksheet = None
 
+    @property
+    def sheet(self):
+        return self.__sheet
+
     def set_worksheet(self, title: str) -> None:
         try:
             self.__worksheet = self.__sheet.worksheet_by_title(title)
@@ -87,7 +91,8 @@ class GspReadApi:
         ]
         credentials = json.load(open(service_file))
 
-        raise ValueError(credentials)
+        api = GoogleSheetsApi(src_sheet_id)
+        raise ValueError(api.sheet.worksheets())
 
         client = gspread.service_account_from_dict(credentials, scopes)
         sheet = client.open_by_key(src_sheet_id)
