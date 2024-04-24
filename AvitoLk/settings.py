@@ -14,9 +14,9 @@ from pathlib import Path
 from dotenv import load_dotenv, find_dotenv
 import os
 
-load_dotenv(sys.path[1])
+load_dotenv(sys.path[0])
 
-raise ValueError(sys.path[1], os.getenv('GOOGLE_API_CREDENTIALS_PATH'))
+raise ValueError(sys.path[0], os.getenv('GOOGLE_API_CREDENTIALS_PATH'))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
