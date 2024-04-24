@@ -82,9 +82,13 @@ class GspReadApi:
         """ Returns created sheet id """
         service_file = getenv('GOOGLE_API_CREDENTIALS_PATH')
         credentials = json.load(open(service_file))
+        raise ValueError(0)
         gc = gspread.service_account_from_dict(credentials)
+        raise ValueError(1)
         sheet = gc.copy(src_sheet_id, desc_title)
+        raise ValueError(2)
         sheet.share(None, perm_type='anyone', role='writer')
+        raise ValueError(3)
         return sheet.id
 
 
