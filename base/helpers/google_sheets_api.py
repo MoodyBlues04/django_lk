@@ -92,7 +92,8 @@ class GspReadApi:
         credentials = json.load(open(service_file))
 
         client = gspread.service_account_from_dict(credentials, scopes)
-        raise ValueError('client created', client.__dict__)
+        sheet = client.open_by_key(src_sheet_id)
+        raise ValueError('client created', client.__dict__, sheet.__dict__)
         sheet = client.copy(file_id=src_sheet_id, title=desc_title, copy_permissions=False)
         sheet.share(None, perm_type='anyone', role='writer')
         return sheet.id
