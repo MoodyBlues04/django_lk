@@ -107,6 +107,10 @@ class Tariff(models.Model):
     adverts_count = models.PositiveIntegerField(default=0, null=False)
 
     def create_subscription(self, user: User, status: str = 'active') -> Subscription:
+        subscription = Subscription.objects.filter(user=user).first()
+        if subscription is not None:
+            subscription.delete()
+
         return self.subscription_set.create(
             user=user,
             period_start=datetime.now(),

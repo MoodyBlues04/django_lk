@@ -6,12 +6,22 @@ from base.models import User, Project
 from django.contrib import messages
 
 
-@api_view(['GET', 'POST']) # todo not everywhere
+@api_view(['GET', 'POST'])
 def home(request: Request):
     if not AuthHelper(request).is_admin():
         return redirect('login')  # TODO middleware
 
     return render(request, 'admin/home.html')
+
+
+def test(request: Request):
+    if not AuthHelper(request).is_admin():
+        return redirect('login')
+
+    from base.helpers.gsheets_service import GoogleSheetsService
+    sheet_id = GoogleSheetsService.copy_avito_sheet()
+    raise ValueError('success', sheet_id)
+
 
 
 @api_view(['GET', 'POST'])

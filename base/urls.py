@@ -6,6 +6,7 @@ from .views.admin import admin_views, faq_views, tariff_views
 urlpatterns = [
     # admin
     path('admin/', admin_views.home, name='admin.home'),
+    path('admin/test', admin_views.test, name='admin.test'),
     path('admin/faq/<int:faq_id>/edit', faq_views.edit_faq, name='admin.edit_faq'),
     path('admin/faq/<int:faq_id>/delete', faq_views.delete_faq, name='admin.delete_faq'),
     path('admin/faq/create', faq_views.create_faq, name='admin.create_faq'),
