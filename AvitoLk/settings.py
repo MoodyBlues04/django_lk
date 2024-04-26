@@ -206,6 +206,7 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Email
+EMAIL_TIMEOUT = 20
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_BACKEND = 'base.backend.email.EmailBackend'
 EMAIL_HOST = 'smtp.mail.ru'

@@ -23,7 +23,6 @@ def test(request: Request):
     raise ValueError('success', sheet_id)
 
 
-
 @api_view(['GET', 'POST'])
 def profile(request: Request):
     if not AuthHelper(request).is_admin():
