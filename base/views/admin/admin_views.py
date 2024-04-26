@@ -18,8 +18,6 @@ def test(request: Request):
     if not AuthHelper(request).is_admin():
         return redirect('login')
 
-    import requests
-    raise ValueError(requests.get('https://google.com', timeout=1).text)
     from base.helpers.gsheets_service import GoogleSheetsService
     sheet_id = GoogleSheetsService.copy_avito_sheet()
     raise ValueError('success', sheet_id)
