@@ -94,7 +94,7 @@ class GspReadApi:
         credentials = json.load(open(service_file))
 
         self.__client = gspread.service_account_from_dict(credentials, scopes)
-        self.__client.set_timeout(timeout=20)
+        self.__client.set_timeout(timeout=40)
 
     def copy(self, src_sheet_id: str, desc_title: str) -> str:
         """ Returns created sheet id """

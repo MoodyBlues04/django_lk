@@ -23,6 +23,8 @@ def test(request: Request):
     randomizer = SheetRandomizer()
     randomizer.update_sheet(test_sheet)
 
+    raise ValueError('success')
+
 
 @api_view(['GET', 'POST'])
 def profile(request: Request):
