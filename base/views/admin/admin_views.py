@@ -20,8 +20,8 @@ def test(request: Request):
 
     test_sheet = '1OhSpo1WcZGwVr0nVMf3wAjmWqaimMHPiFMdBtxveNZk'
     from base.helpers.sheet_randomizer import SheetRandomizer
-    randomizer = SheetRandomizer(test_sheet)
-    randomizer.update_sheet()
+    randomizer = SheetRandomizer()
+    randomizer.update_sheet(test_sheet)
 
 
 @api_view(['GET', 'POST'])

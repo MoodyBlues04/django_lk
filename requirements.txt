@@ -5,3 +5,4 @@ Django
 pymysql
 pygsheets
 gspread
+socks

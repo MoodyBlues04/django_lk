@@ -85,9 +85,7 @@ class GoogleSheetsApi:
 
 
 class GspReadApi:
-    @classmethod
-    def copy(cls, src_sheet_id: str, desc_title: str) -> str:
-        """ Returns created sheet id """
+    def __init__(self) -> None:
         service_file = getenv('GOOGLE_API_CREDENTIALS_PATH')
         scopes = [
             'https://www.googleapis.com/auth/spreadsheets',
@@ -95,8 +93,14 @@ class GspReadApi:
         ]
         credentials = json.load(open(service_file))
 
-        client = gspread.service_account_from_dict(credentials, scopes)
-        client.set_timeout(timeout=20)
-        sheet = client.copy(file_id=src_sheet_id, title=desc_title, copy_permissions=False)
+        self.__client = gspread.service_account_from_dict(credentials, scopes)
+        self.__client.set_timeout(timeout=20)
+
+    def copy(self, src_sheet_id: str, desc_title: str) -> str:
+        """ Returns created sheet id """
+        sheet = self.__client.copy(file_id=src_sheet_id, title=desc_title, copy_permissions=False)
         sheet.share(None, perm_type='anyone', role='writer')
         return sheet.id
+
+    def open(self, sheet_id: str):
+        return self.__client.open_by_key(sheet_id)

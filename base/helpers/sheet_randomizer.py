@@ -1,15 +1,16 @@
-from base.helpers.google_sheets_api import GoogleSheetsApi
+from base.helpers.google_sheets_api import GspReadApi
 
 
 class SheetRandomizer:
     __WORKSHEET = 'Объявления'
 
-    def __init__(self, sheet_id: str) -> None:
-        self.__api = GoogleSheetsApi(sheet_id)
-        self.__api.set_worksheet(self.__WORKSHEET)
+    def __init__(self) -> None:
+        self.__api = GspReadApi()
 
-    def update_sheet(self) -> None:
-        data = self.__api.sheet.worksheet.get_all_values()
+    def update_sheet(self, sheet_id: str) -> None:
+        sheet = self.__api.open(sheet_id)
+        worksheet = sheet.worksheet(self.__WORKSHEET)
+        data = worksheet.get_all_values()
         raise ValueError(data)
         # 1) get sheet data by api
         # 2) randomize
