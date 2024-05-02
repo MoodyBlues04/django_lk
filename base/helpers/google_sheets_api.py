@@ -15,6 +15,10 @@ class GoogleSheetsApi:
     def sheet(self):
         return self.__sheet
 
+    @property
+    def worksheet(self):
+        return self.__worksheet
+
     def set_worksheet(self, title: str) -> None:
         try:
             self.__worksheet = self.__sheet.worksheet_by_title(title)

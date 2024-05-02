@@ -18,9 +18,10 @@ def test(request: Request):
     if not AuthHelper(request).is_admin():
         return redirect('login')
 
-    from base.helpers.gsheets_service import GoogleSheetsService
-    sheet_id = GoogleSheetsService.copy_avito_sheet()
-    raise ValueError('success', sheet_id)
+    test_sheet = '1OhSpo1WcZGwVr0nVMf3wAjmWqaimMHPiFMdBtxveNZk'
+    from base.helpers.sheet_randomizer import SheetRandomizer
+    randomizer = SheetRandomizer(test_sheet)
+    randomizer.update_sheet()
 
 
 @api_view(['GET', 'POST'])
