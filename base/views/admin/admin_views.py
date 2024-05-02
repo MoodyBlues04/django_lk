@@ -18,6 +18,7 @@ def test(request: Request):
     if not AuthHelper(request).is_admin():
         return redirect('login')
 
+    raise ValueError('tmp')
     test_sheet = '1OhSpo1WcZGwVr0nVMf3wAjmWqaimMHPiFMdBtxveNZk'
     from base.helpers.sheet_randomizer import SheetRandomizer
     randomizer = SheetRandomizer()
